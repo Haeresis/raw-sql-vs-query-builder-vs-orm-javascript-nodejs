@@ -6,14 +6,17 @@ const connection = mysql.createConnection({
 	password: "root",
 	database: "raw_builder_orm"
 });
+const authorId = 1;
 
 connection.connect(function (err, handshakeResult) {
 	if (err) err;
 
 	connection.query(`
-		SELECT * FROM books WHERE author_id = ?;
-	`, 1, function (err, results) {
+		SELECT * FROM books WHERE author_id = ${authorId};
+	`, function (err, results) {
 		if (err) err;
+
+		console.log(results);
 
 		connection.end();
 	});
