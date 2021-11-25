@@ -36,7 +36,7 @@ connection.connect(function (err, handshakeResult) {
 			connection.query(`
 				CREATE TABLE authors
 				(
-					id INT NOT NULL,
+					id INT NOT NULL AUTO_INCREMENT,
 					first_name VARCHAR(255) NOT NULL,
 					last_name VARCHAR(255) NOT NULL,
 
@@ -51,36 +51,65 @@ connection.connect(function (err, handshakeResult) {
 				}
 				console.log('Création de la table `authors` réussi', authorCreationResult)
 
-				console.log('Création de la table `books`')
+				console.log('Remplissage de la table `authors`')
 				connection.query(`
-					CREATE TABLE books
-					(
-						id INT NOT NULL,
-						author_id INT NOT NULL,
-						title VARCHAR(255) NOT NULL,
-						original_language CHAR(2) NOT NULL,
-						isbn CHAR(17) NOT NULL,
-
-						PRIMARY KEY (id),
-						FOREIGN KEY (author_id) REFERENCES authors (id) ON UPDATE CASCADE ON DELETE RESTRICT,
-						INDEX title_idx (title),
-						INDEX original_language_idx (original_language),
-						INDEX isbn_idx (isbn)
-					);
-				`, function (err, bookCreationResult) {
+					INSERT INTO authors (first_name, last_name)
+					VALUES
+						('Stephen', 'King'),
+						('Trudi', 'Canavan');
+				`, function (err, authorInsertedResult) {
 					if (err) {
-						console.log('Création de la table `books` échouée', err)
+						console.log('Remplissage de la table `authors` échouée', err)
 						throw err;
 					}
-					console.log('Création de la table `books` réussi', bookCreationResult)
+					console.log('Remplissage de la table `authors` réussi', authorInsertedResult)
 
-					console.log(`Fin de la connexion à l'instance MySQL`)
-					connection.end(function (err) {
+					console.log('Création de la table `books`')
+					connection.query(`
+						CREATE TABLE books
+						(
+							id INT NOT NULL AUTO_INCREMENT,
+							author_id INT NOT NULL,
+							title VARCHAR(255) NOT NULL,
+							original_language CHAR(2) NOT NULL,
+							isbn CHAR(17) NOT NULL,
+
+							PRIMARY KEY (id),
+							FOREIGN KEY (author_id) REFERENCES authors (id) ON UPDATE CASCADE ON DELETE RESTRICT,
+							INDEX title_idx (title),
+							INDEX original_language_idx (original_language),
+							INDEX isbn_idx (isbn)
+						);
+					`, function (err, bookCreationResult) {
 						if (err) {
-							console.log(`Fin de la connexion à l'instance MySQL échouée`, err)
+							console.log('Création de la table `books` échouée', err)
 							throw err;
 						}
-						console.log(`Fin de la connexion à l'instance MySQL réussi`)
+						console.log('Création de la table `books` réussi', bookCreationResult)
+
+						console.log('Remplissage de la table `books`')
+						connection.query(`
+							INSERT INTO books (author_id, title, original_language, isbn)
+							VALUES
+								(1, 'The Shining', 'EN', '978-0307743657'),
+								(1, 'The Dark Tower: The Gunslinger', 'EN', '978-0-937986-50-9'),
+								(2, 'The Magician''s Apprentice', 'EN', '978-0-316-03788-4');
+						`, function (err, authorInsertedResult) {
+							if (err) {
+								console.log('Remplissage de la table `books` échouée', err)
+								throw err;
+							}
+							console.log('Remplissage de la table `books` réussi', authorInsertedResult)
+
+							console.log(`Fin de la connexion à l'instance MySQL`)
+							connection.end(function (err) {
+								if (err) {
+									console.log(`Fin de la connexion à l'instance MySQL échouée`, err)
+									throw err;
+								}
+								console.log(`Fin de la connexion à l'instance MySQL réussi`)
+							});
+						});
 					});
 				});
 			});
