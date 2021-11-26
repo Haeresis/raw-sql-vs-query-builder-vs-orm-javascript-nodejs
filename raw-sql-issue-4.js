@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const fs = require('fs');
 
 const connection = mysql.createConnection({
 	host: "localhost",
@@ -7,22 +8,18 @@ const connection = mysql.createConnection({
 	database: "raw_builder_orm"
 });
 
-// Données provenant de la requête cliente
-const email = 'bruno.lesieur@example.com';
-const password = 'bar';
-
 connection.connect(function (err, handshakeResult) {
 	if (err) err;
 
 	// Requête SQL à considérer
-	connection.query(`
-		SELECT id FROM users WHERE email = '${email}' AND password = '${password}';
-	`, function (err, results) {
+	connection.query(
+		fs.readFileSync('./raw-sql-issue-4.sql', { encoding: 'utf8' })
+	, function (err, results) {
 		if (err) err;
 
 		// Résultat
 		console.log(results);
-		// `[ { id: 2 } ]`
+		// `undefined`
 
 		connection.end();
 	});

@@ -68,12 +68,12 @@ connection.connect(function (err, handshakeResult) {
 						(
 							id INT NOT NULL AUTO_INCREMENT,
 							role_id INT NOT NULL,
-							pseudo VARCHAR(255) NOT NULL,
+							email VARCHAR(255) NOT NULL,
 							password VARCHAR(255) NOT NULL,
 
 							PRIMARY KEY (id),
 							FOREIGN KEY (role_id) REFERENCES roles (id) ON UPDATE CASCADE ON DELETE RESTRICT,
-							INDEX pseudo_idx (pseudo),
+							INDEX email_idx (email),
 							INDEX password_idx (password)
 						);
 					`, function (err, bookCreationResult) {
@@ -85,10 +85,10 @@ connection.connect(function (err, handshakeResult) {
 
 						console.log('Remplissage de la table `users`')
 						connection.query(`
-							INSERT INTO users (role_id, pseudo, password)
+							INSERT INTO users (role_id, email, password)
 							VALUES
-								(1, 'Admin', 'foo'),
-								(2, 'Bob', 'bar');
+								(1, 'admin@example.com', 'foo'),
+								(2, 'bruno.lesieur@example.com', 'bar');
 						`, function (err, authorInsertedResult) {
 							if (err) {
 								console.log('Remplissage de la table `users` échouée', err)

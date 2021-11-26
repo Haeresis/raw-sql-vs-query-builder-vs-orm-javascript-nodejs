@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
 
 // Données provenant de la requête cliente
 const email = 'bruno.lesieur@example.com';
-const password = 'bar';
+const password = `' OR email='admin@example.com' AND '1'='1`;
 
 connection.connect(function (err, handshakeResult) {
 	if (err) err;
@@ -22,7 +22,7 @@ connection.connect(function (err, handshakeResult) {
 
 		// Résultat
 		console.log(results);
-		// `[ { id: 2 } ]`
+		// `[ { id: 1 } ]`
 
 		connection.end();
 	});

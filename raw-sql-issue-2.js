@@ -7,22 +7,21 @@ const connection = mysql.createConnection({
 	database: "raw_builder_orm"
 });
 
-// Données provenant de la requête cliente
-const email = 'bruno.lesieur@example.com';
-const password = 'bar';
-
 connection.connect(function (err, handshakeResult) {
 	if (err) err;
 
 	// Requête SQL à considérer
 	connection.query(`
-		SELECT id FROM users WHERE email = '${email}' AND password = '${password}';
-	`, function (err, results) {
+		SELECT * FROM users WERE email = ? AND password = ?;
+	`, [
+		'bruno.lesieur@example.com',
+		'bar'
+	], function (err, results) {
 		if (err) err;
 
 		// Résultat
 		console.log(results);
-		// `[ { id: 2 } ]`
+		// `undefined`
 
 		connection.end();
 	});
