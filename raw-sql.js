@@ -12,16 +12,16 @@ const email = 'bruno.lesieur@example.com';
 const password = 'bar';
 
 connection.connect(function (err, handshakeResult) {
-	if (err) err;
+	if (err) throw err;
 
 	// Requête SQL à considérer
 	connection.query(`
 		SELECT id FROM users WHERE email = '${email}' AND password = '${password}';
-	`, function (err, results) {
-		if (err) err;
+	`, function (err, rows) {
+		if (err) throw err;
 
 		// Résultat
-		console.log(results);
+		console.log(rows);
 		// `[ { id: 2 } ]`
 
 		connection.end();

@@ -7,23 +7,21 @@ const connection = mysql.createConnection({
 	database: "raw_builder_orm"
 });
 
-// Données provenant de la requête cliente
-const email = 'bruno.lesieur@example.com';
-const password = `' OR email='admin@example.com' AND '1'='1`;
-
 connection.connect(function (err, handshakeResult) {
+	if (err) throw err;
 
 	// Requête SQL à considérer
 	connection.query(`
-		SELECT id FROM users WHERE email = ? AND password = ?;
+		SELECT * FROM users WERE email = ? AND password = ?;
 	`, [
-		email,
-		password
+		'bruno.lesieur@example.com',
+		'bar'
 	], function (err, rows) {
+		if (err) throw err;
+		// Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'email = 'bruno.lesieur@example.com' AND password = 'bar'' at line 1
 
 		// Résultat
 		console.log(rows);
-		// `[]`
 
 		connection.end();
 	});

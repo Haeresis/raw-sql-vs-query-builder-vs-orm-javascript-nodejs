@@ -8,7 +8,6 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(function (err, handshakeResult) {
-	if (err) err;
 
 	// Requête SQL à considérer
 	connection.query(`
@@ -27,11 +26,10 @@ connection.connect(function (err, handshakeResult) {
 				OR 
 			a.last_name = 'Canavan'
 		);
-	`, function (err, results) {
-		if (err) err;
+	`, function (err, rows) {
 
 		// Résultat
-		console.log(results);
+		console.log(rows);
 		/*
 		`[
 		  { book_title: 'The Shining', author_name: 'Stephen King' },

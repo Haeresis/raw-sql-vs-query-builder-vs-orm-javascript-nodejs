@@ -9,16 +9,14 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(function (err, handshakeResult) {
-	if (err) err;
 
 	// Requête SQL à considérer
 	connection.query(
 		fs.readFileSync('./raw-sql-fix-3.sql', { encoding: 'utf8' })
-	, function (err, results) {
-		if (err) err;
+	, function (err, rows) {
 
 		// Résultat
-		console.log(results);
+		console.log(rows);
 		/*
 		`[
 		  { book_title: 'The Shining', author_name: 'Stephen King' },

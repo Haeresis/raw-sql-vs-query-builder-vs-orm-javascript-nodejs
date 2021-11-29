@@ -8,7 +8,6 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(function (err, handshakeResult) {
-	if (err) err;
 
 	// Requête SQL à considérer
 	connection.query(`
@@ -16,11 +15,10 @@ connection.connect(function (err, handshakeResult) {
 	`, [
 		'bruno.lesieur@example.com',
 		'bar'
-	], function (err, results) {
-		if (err) err;
+	], function (err, rows) {
 
 		// Résultat
-		console.log(results);
+		console.log(rows);
 		// `undefined`
 
 		connection.end();
