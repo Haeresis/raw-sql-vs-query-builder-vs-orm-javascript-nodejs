@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "knex": "^0.95.14",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.0-alpha.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.3.0"
   }
 }

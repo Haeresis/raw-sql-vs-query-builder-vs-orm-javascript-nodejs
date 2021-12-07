@@ -17,7 +17,7 @@ connection.connect(function (err, handshakeResult) {
 
 	console.log('Suppression de la base de donnée')
 	connection.query(`
-		DROP DATABASE raw_builder_orm;
+		DROP DATABASE IF EXISTS raw_builder_orm;
 	`, function (err, deletionResult) {
 		if (err) {
 			console.log('Suppression de la base de donnée échouée', err)
@@ -146,8 +146,8 @@ connection.connect(function (err, handshakeResult) {
 												id INT NOT NULL AUTO_INCREMENT,
 												author_id INT NOT NULL,
 												title VARCHAR(255) NOT NULL,
-												original_language CHAR(2) NOT NULL,
-												isbn CHAR(17) NOT NULL,
+												original_language VARCHAR(2) NOT NULL,
+												isbn VARCHAR(17) NOT NULL,
 
 												PRIMARY KEY (id),
 												FOREIGN KEY (author_id) REFERENCES authors (id) ON UPDATE CASCADE ON DELETE RESTRICT,
