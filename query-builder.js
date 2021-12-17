@@ -13,12 +13,12 @@ let query = knex.from('users');
 
 /* ... */
 
-// ... later after some condition stuff...
+// ...plus tard après plusieurs conditions...
 query.select('id');
 
 /* ... */
 
-// ...and still lates after some parameters requirement...
+// ...et encore plus tard après plusieurs demandes de paramètres...
 
 query.where({
 	email: 'bruno.lesieur@example.com',
@@ -27,14 +27,14 @@ query.where({
 
 /* ... */
 
-// ...and later something not require the `id`, but the `email`...
+// ...et encore plus tard alors qu'on ne veut pas l'`id`, mais l'`email`...
 query
 	.clear('select')
 	.select('email');
 
 /* ... */
 
-// ...and finaly, later, because the user is admin, I can also see the role of the member.
+// ...et finalement, plus tard, alors que l'utilisateur est administrateur, je veux aussi voir l'`id` de role du membre.
 query.select('role_id')
 
 // Requête SQL générée

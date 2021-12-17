@@ -7,8 +7,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Books extends Model {
     static associate({ Authors }) {
-      Books.hasOne(Authors, {
-        constraints: false
+      Books.belongsTo(Authors, {
+        foreignKey: { 
+          name: 'author_id',
+          allowNull: false
+        }
       });
     }
   };

@@ -15,17 +15,21 @@ Object.values(models)
   .forEach(model => model.associate(models));
 
 (async function () {
-  const result = await Authors.findOne({
-    where: { lastName: 'King' },
-    include: Books
-  });
+  const result = await Books.findAll();
+  console.log(JSON.stringify(result, null, 2));
 
-  // Résultat
-  result.Books.forEach((item) => {
-    console.log(item.title)
-  });
-  /*
-  The Shining
-  The Dark Tower: The Gunslinger
-  */
+  /* ... */
+
+  // ...plus tard alors que vous avez besoin d'afficher les noms d'auteurs...
+
+  result.forEach(async (book) => {
+    const { Author } = await Books.findOne({
+      where: { id: book.id },
+      include: {
+        model: Authors,
+        required: true
+      }
+    })
+    console.log(JSON.stringify(Author.firstName + ' ' + Author.lastName, null, 2));
+  })
 })();

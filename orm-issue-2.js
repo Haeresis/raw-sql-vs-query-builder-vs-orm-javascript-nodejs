@@ -15,44 +15,40 @@ Object.values(models)
   .forEach(model => model.associate(models));
 
 (async function () {
-  const author = await Authors.findOne({
-    where: { lastName: 'King' }
-  })
-
-  const result = await Books.findAll({
-    where: { authorId: author.id },
+  const result = await Authors.findOne({
+    where: { lastName: 'King' },
+    attributes: [],
+    include: {
+      model: Books,
+      attributes: [Books.rawAttributes.title.field],
+      required: true
+    }
   });
 
   // Résultat
-  console.log(JSON.stringify(author, null, 2));
+  console.log(JSON.stringify(result, null, 2));
   /*
   {
-    "id": 1,
-    "firstName": "Stephen",
-    "lastName": "King",
-    "BookId": null
+    "Books": [
+      {
+        "title": "The Shining"
+      },
+      {
+        "title": "The Dark Tower: The Gunslinger"
+      }
+    ]
   }
   */
- 
-  result.forEach((item) => {
+
+  result.Books.forEach((item) => {
     console.log(JSON.stringify(item, null, 2));
   });
   /*
   {
-    "id": 1,
-    "authorId": 1,
-    "title": "The Shining",
-    "originalLanguage": "EN",
-    "isbn": "978-0307743657",
-    "author_id": 1
+    "title": "The Shining"
   }
   {
-    "id": 2,
-    "authorId": 1,
-    "title": "The Dark Tower: The Gunslinger",
-    "originalLanguage": "EN",
-    "isbn": "978-0-937986-50-9",
-    "author_id": 1
+    "title": "The Dark Tower: The Gunslinger"
   }
   */
 })();

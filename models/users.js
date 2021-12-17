@@ -7,8 +7,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     static associate({ Roles }) {
-      Users.hasOne(Roles, {
-        constraints: false
+      Users.belongsTo(Roles, {
+        foreignKey: { 
+          name: 'role_id',
+          allowNull: false
+        }
       });
     }
   };
