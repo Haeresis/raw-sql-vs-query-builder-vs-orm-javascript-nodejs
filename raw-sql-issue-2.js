@@ -13,8 +13,8 @@ connection.connect(function (err, handshakeResult) {
 	connection.query(`
 		SELECT * FROM users WERE email = ? AND password = ?;
 	`, [
-		'bruno.lesieur@example.com',
-		'bar'
+		'bruno@example.com',
+		'foo'
 	], function (err, rows) {
 
 		// Résultat

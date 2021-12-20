@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
 });
 
 // Données provenant de la requête cliente
-const email = 'bruno.lesieur@example.com';
+const email = 'bruno@example.com';
 const password = `' OR email='admin@example.com' AND '1'='1`;
 
 connection.connect(function (err, handshakeResult) {

@@ -1,1 +1,1 @@
-SELECT * FROM boks
+SELECT * FROM usrs

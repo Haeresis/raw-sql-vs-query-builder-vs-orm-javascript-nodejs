@@ -1,15 +1,11 @@
 SELECT
-	b.title AS book_title,
-	CONCAT(
-		a.first_name,
-		' ',
-		a.last_name
-	) AS author_name
-FROM books AS b
-INNER JOIN authors AS a
-	ON b.author_id = a.id
+	u.email,
+	r.name
+FROM users AS u
+INNER JOIN roles AS r
+	ON u.role_id = r.id
 WHERE (
-	b.title = 'The Shining' 
+	u.email = 'bruno@example.com' 
 		OR 
-	a.last_name = 'Canavan'
+	r.name = 'Lecteur'
 );

@@ -16,7 +16,7 @@ connection.connect(function (err, handshakeResult) {
 		fs.readFileSync('./raw-sql-issue-4.sql', { encoding: 'utf8' })
 	, function (err, rows) {
 		if (err) throw err;
-		// Error: Table 'raw_builder_orm.boks' doesn't exist
+		// Error: Table 'raw_builder_orm.usrs' doesn't exist
 
 		// Résultat
 		console.log(rows);

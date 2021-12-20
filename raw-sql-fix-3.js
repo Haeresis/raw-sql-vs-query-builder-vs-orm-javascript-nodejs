@@ -19,11 +19,10 @@ connection.connect(function (err, handshakeResult) {
 		console.log(rows);
 		/*
 		`[
-		  { book_title: 'The Shining', author_name: 'Stephen King' },
-		  {
-		    book_title: "The Magician's Apprentice",
-		    author_name: 'Trudi Canavan'
-		  }
+		  { email: 'bruno@example.com', name: 'Éditeur' },
+		  { email: 'nyx@example.com', name: 'Lecteur' },
+		  { email: 'noctalie@example.com', name: 'Lecteur' },
+		  { email: 'dayski@example.com', name: 'Lecteur' }
 		]`
 		*/
 

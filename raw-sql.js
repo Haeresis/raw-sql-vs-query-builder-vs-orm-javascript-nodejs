@@ -8,8 +8,8 @@ const connection = mysql.createConnection({
 });
 
 // Données provenant de la requête cliente
-const email = 'bruno.lesieur@example.com';
-const password = 'bar';
+const email = 'bruno@example.com';
+const password = 'foo';
 
 connection.connect(function (err, handshakeResult) {
 	if (err) throw err;

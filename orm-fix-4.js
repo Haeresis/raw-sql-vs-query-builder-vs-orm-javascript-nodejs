@@ -1,40 +1,40 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('raw_builder_orm', 'root', 'root', {
-  host: 'localhost',
-  dialect: 'mysql'
+	host: 'localhost',
+	dialect: 'mysql'
 });
 
-const Authors = require('./models/authors.js')(sequelize, DataTypes);
-const Books = require('./models/books.js')(sequelize, DataTypes);
 const Roles = require('./models/roles.js')(sequelize, DataTypes);
 const Users = require('./models/users.js')(sequelize, DataTypes);
 
-const models = { Authors, Books, Roles, Users };
+const models = { Roles, Users };
 Object.values(models)
-  .filter(model => typeof model.associate === 'function')
-  .forEach(model => model.associate(models));
+	.filter(model => typeof model.associate === 'function')
+	.forEach(model => model.associate(models));
 
 (async function () {
-  const authorIds = [1, 2];
-  const booksIds = {}
+	const roleIds = [2, 3];
+	const usersIds = {}
 
-  const books = await Books.findAll({ 
-      where: { author_id: authorIds }
-  });
-  books.forEach((book) => {
-    booksIds[book.author_id] = booksIds[book.author_id] ? [...booksIds[book.author_id], book.id] : [book.id]
-  })
+	const users = await Users.findAll({ 
+		where: { roleId: roleIds }
+	});
+	users.forEach((user) => {
+	  usersIds[user.roleId] = usersIds[user.roleId] ? [...usersIds[user.roleId], user.id] : [user.id]
+	})
 
-  console.log(JSON.stringify(booksIds, null, 2));
-  /*
-  {       
-    "1": [
-      1,  
-      2   
-    ],    
-    "2": [
-      3   
-    ]     
-  }
-  */
+	console.log(JSON.stringify(usersIds, null, 2));
+	/*
+	`{
+	  "2": [
+		2,
+		3
+	  ],
+	  "3": [
+		4,
+		5,
+		6
+	  ]
+	}`
+	*/
 })();

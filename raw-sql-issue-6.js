@@ -17,7 +17,7 @@ function runQuery(callback) {
 	// Requête SQL à considérer
 	connection.query(`
 		SELECT ${select.join(', ')}
-		FROM books AS b
+		FROM users AS u
 		${inner.join(' ')}
 		${where.length ? 'WHERE ' + where.join(' ') : ''};
 	`, function (err, rows) {
@@ -25,20 +25,22 @@ function runQuery(callback) {
 		// Résultat
 		console.log(rows);
 		/*
-		[
-		  { title: 'The Dark Tower: The Gunslinger' },
-		  { title: "The Magician's Apprentice" },
-		  { title: 'The Shining' }
-		]
+		`[
+		  { email: 'admin@example.com' },
+		  { email: 'bruno@example.com' },
+		  { email: 'dayski@example.com' },
+		  { email: 'magalie@example.com' },
+		  { email: 'noctalie@example.com' },
+		  { email: 'nyx@example.com' }
+		]`
 		*/
 		/*
-		[
-		  { book_title: 'The Shining', author_name: 'Stephen King' },
-		  {
-		    book_title: "The Magician's Apprentice",
-		    author_name: 'Trudi Canavan'
-		  }
-		]
+		`[
+		  { email: 'bruno@example.com', name: 'Éditeur' },
+		  { email: 'nyx@example.com', name: 'Lecteur' },
+		  { email: 'noctalie@example.com', name: 'Lecteur' },
+		  { email: 'dayski@example.com', name: 'Lecteur' }
+		]`
 		*/
 
 		connection.end();
@@ -49,7 +51,7 @@ function runQuery(callback) {
 
 connection.connect(function (err, handshakeResult) {
 	select = [
-		`b.title`,
+		`u.email`,
 	]
 	inner = []
 	where = []
@@ -57,20 +59,16 @@ connection.connect(function (err, handshakeResult) {
 	runQuery(function () {
 
 		select = [
-			`b.title AS book_title`,
-			`CONCAT(
-				a.first_name,
-				' ',
-				a.last_name
-			) AS author_name`,
+			`u.email`,
+			`r.name`,
 		]
 		inner = [
-			`INNER JOIN authors AS a
-				ON b.author_id = a.id`,
+			`INNER JOIN roles AS r
+				ON u.role_id = r.id`,
 		]
 		where = [
-			`b.title = 'The Shining' OR`, 
-			`a.last_name = 'Canavan'`
+			`u.email = 'bruno@example.com' OR`, 
+			`r.name = 'Lecteur'`
 		]
 
 		runQuery();

@@ -9,34 +9,35 @@ const connection = mysql.createConnection({
 
 connection.connect(function (err, handshakeResult) {
 
-	// Requête SQL à considérer
-	connection.query(`
+	const select = `
 		SELECT
-			b.title AS book_title,
-			CONCAT(
-				a.first_name,
-				' ',
-				a.last_name
-			) AS author_name
-		FROM books AS b
-		INNER JOIN authors AS a
-			ON b.author_id = a.id
+			u.email,
+			r.name
+	`;
+	const from = `
+		FROM users AS u
+		INNER JOIN roles AS r
+			ON u.role_id = r.id
+	`;
+	const where = `
 		WHERE (
-			b.title = 'The Shining' 
+			u.email = 'bruno@example.com' 
 				OR 
-			a.last_name = 'Canavan'
+			r.name = 'Lecteur'
 		);
-	`, function (err, rows) {
+	`;
+
+	// Requête SQL à considérer
+	connection.query(select + from + where, function (err, rows) {
 
 		// Résultat
 		console.log(rows);
 		/*
 		`[
-		  { book_title: 'The Shining', author_name: 'Stephen King' },
-		  {
-		    book_title: "The Magician's Apprentice",
-		    author_name: 'Trudi Canavan'
-		  }
+		  { email: 'bruno@example.com', name: 'Éditeur' },
+		  { email: 'nyx@example.com', name: 'Lecteur' },
+		  { email: 'noctalie@example.com', name: 'Lecteur' },
+		  { email: 'dayski@example.com', name: 'Lecteur' }
 		]`
 		*/
 

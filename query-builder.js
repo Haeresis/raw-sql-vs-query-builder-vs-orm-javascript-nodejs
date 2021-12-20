@@ -21,8 +21,8 @@ query.select('id');
 // ...et encore plus tard après plusieurs demandes de paramètres...
 
 query.where({
-	email: 'bruno.lesieur@example.com',
-	password: 'bar'
+	email: 'bruno@example.com',
+	password: 'foo'
 });
 
 /* ... */
@@ -42,7 +42,7 @@ console.log(query.toSQL().toNative());
 /*
 {
   sql: 'select `email`, `role_id` from `users` where `email` = ? and `password` = ?',
-  bindings: [ 'bruno.lesieur@example.com', 'bar' ]
+  bindings: [ 'bruno@example.com', 'foo' ]
 }
 */
 
@@ -51,7 +51,7 @@ query.then((rows) => {
 
 	// Résultat
 	console.log(rows);
-	// `[ { email: 'bruno.lesieur@example.com', role_id: 2 } ]`
+	// `[ { email: 'bruno@example.com', role_id: 2 } ]`
 
 }).catch((err) => {
 	throw err;
