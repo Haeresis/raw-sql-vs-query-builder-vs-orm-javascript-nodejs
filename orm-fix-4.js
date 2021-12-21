@@ -20,7 +20,7 @@ Object.values(models)
 		where: { roleId: roleIds }
 	});
 	users.forEach((user) => {
-	  usersIds[user.roleId] = usersIds[user.roleId] ? [...usersIds[user.roleId], user.id] : [user.id]
+		usersIds[user.roleId] = usersIds[user.roleId] ? [...usersIds[user.roleId], user.id] : [user.id]
 	})
 
 	console.log(JSON.stringify(usersIds, null, 2));

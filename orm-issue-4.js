@@ -17,10 +17,10 @@ Object.values(models)
 	const usersIds = {};
 
 	await Promise.all(roleIds.map(async (roleId) => {
-	  usersIds[roleId] = await Users.findAll({ 
-		  where: { roleId: roleId }
-	  });
-	  usersIds[roleId] = usersIds[roleId].map(x => x.id)
+		usersIds[roleId] = await Users.findAll({ 
+			where: { roleId: roleId }
+		});
+		usersIds[roleId] = usersIds[roleId].map(x => x.id)
 	}));
 
 	console.log(JSON.stringify(usersIds, null, 2));
